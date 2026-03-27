@@ -1,0 +1,1098 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumière Beauty Salon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FFFDF9;
+    --blush: #E8C4B8;
+    --rose: #C4735A;
+    --deep-rose: #A0523C;
+    --champagne: #D4B896;
+    --gold: #B8966E;
+    --deep-brown: #2C1A14;
+    --medium-brown: #5C3D2E;
+    --light-brown: #8B6355;
+    --text-dark: #1E1209;
+    --text-mid: #5C3D2E;
+    --text-light: #9B7B6A;
+    --overlay: rgba(44,26,20,0.6);
+    --glass: rgba(250,247,242,0.92);
+    --shadow-soft: 0 8px 40px rgba(44,26,20,0.10);
+    --shadow-med: 0 16px 60px rgba(44,26,20,0.15);
+    --transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+ 
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; display: block; }
+  a { text-decoration: none; color: inherit; }
+  button { cursor: pointer; font-family: 'Jost', sans-serif; }
+  input, select, textarea { font-family: 'Jost', sans-serif; }
+ 
+  /* ===== PAGES ===== */
+  .page { display: none; min-height: 100vh; }
+  .page.active { display: block; }
+ 
+  /* ===== NAV ===== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(196,115,90,0.15);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 4%;
+    height: 70px;
+    transition: var(--transition);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem; font-weight: 300; letter-spacing: 0.08em;
+    color: var(--deep-rose);
+  }
+  .nav-logo span { font-style: italic; color: var(--gold); }
+  .nav-links { display: flex; gap: 2.2rem; align-items: center; }
+  .nav-links a {
+    font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-mid); font-weight: 500;
+    position: relative; padding-bottom: 3px;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px; background: var(--rose);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--rose); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-actions { display: flex; gap: 1rem; align-items: center; }
+  .btn-nav {
+    padding: 0.5rem 1.4rem;
+    border-radius: 30px;
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+    transition: var(--transition);
+  }
+  .btn-nav-outline {
+    border: 1.5px solid var(--rose); color: var(--rose); background: transparent;
+  }
+  .btn-nav-outline:hover { background: var(--rose); color: #fff; }
+  .btn-nav-filled { background: var(--rose); color: #fff; border: none; }
+  .btn-nav-filled:hover { background: var(--deep-rose); }
+ 
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #FAF7F2 0%, #F0E6DC 40%, #E8D0C4 100%);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding-top: 70px;
+  }
+  .hero-bg-circle {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,115,90,0.12) 0%, transparent 70%);
+  }
+  .hero-bg-circle:nth-child(1) { width: 700px; height: 700px; top: -200px; right: -200px; }
+  .hero-bg-circle:nth-child(2) { width: 400px; height: 400px; bottom: -100px; left: -100px; }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 8%;
+    max-width: 650px;
+  }
+  .hero-eyebrow {
+    font-size: 0.78rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem; font-weight: 500;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 30px; height: 1px; background: var(--gold); }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 300; line-height: 1.05;
+    color: var(--deep-brown);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--rose); }
+  .hero-desc {
+    font-size: 1rem; color: var(--text-light); line-height: 1.8;
+    margin-bottom: 2.5rem; max-width: 440px; font-weight: 300;
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 0.9rem 2.2rem;
+    background: var(--rose); color: #fff;
+    border: none; border-radius: 40px;
+    font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;
+    transition: var(--transition);
+    box-shadow: 0 8px 30px rgba(196,115,90,0.35);
+  }
+  .btn-primary:hover { background: var(--deep-rose); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(196,115,90,0.4); }
+  .btn-secondary {
+    padding: 0.9rem 2.2rem;
+    background: transparent; color: var(--deep-brown);
+    border: 1.5px solid var(--champagne); border-radius: 40px;
+    font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;
+    transition: var(--transition);
+  }
+  .btn-secondary:hover { border-color: var(--rose); color: var(--rose); }
+  .hero-floating-card {
+    position: absolute; right: 8%; top: 50%; transform: translateY(-50%);
+    background: #fff; border-radius: 20px;
+    padding: 2rem; box-shadow: var(--shadow-med);
+    width: 280px; z-index: 2;
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(-50%) translateY(0)} 50%{transform:translateY(-50%) translateY(-12px)} }
+  .hero-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; color: var(--deep-brown); margin-bottom: 1rem;
+  }
+  .hero-stat { display: flex; justify-content: space-between; margin-bottom: 0.6rem; font-size: 0.82rem; }
+  .hero-stat-num { font-weight: 600; color: var(--rose); }
+  .hero-badge {
+    margin-top: 1rem; background: var(--cream); border-radius: 10px;
+    padding: 0.7rem 1rem; font-size: 0.78rem; color: var(--text-mid);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .badge-dot { width: 8px; height: 8px; background: #4CAF50; border-radius: 50%; flex-shrink: 0; }
+ 
+  /* ===== SECTION COMMONS ===== */
+  section { padding: 100px 8%; }
+  .section-label {
+    font-size: 0.75rem; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; line-height: 1.15;
+    color: var(--deep-brown); margin-bottom: 1rem;
+  }
+  .section-title em { font-style: italic; color: var(--rose); }
+  .section-desc {
+    font-size: 0.95rem; color: var(--text-light); line-height: 1.9;
+    max-width: 500px; font-weight: 300; margin-bottom: 3rem;
+  }
+ 
+  /* ===== SERVICES ===== */
+  #services-section { background: var(--warm-white); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  .service-card {
+    background: var(--cream); border-radius: 16px;
+    padding: 2rem; cursor: pointer;
+    transition: var(--transition);
+    border: 1px solid rgba(196,115,90,0.1);
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: linear-gradient(90deg, var(--rose), var(--gold));
+    transform: scaleX(0); transition: transform 0.3s;
+  }
+  .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-med); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; color: var(--deep-brown); margin-bottom: 0.5rem;
+  }
+  .service-desc { font-size: 0.85rem; color: var(--text-light); line-height: 1.7; margin-bottom: 1rem; }
+  .service-price { font-size: 1.1rem; color: var(--rose); font-weight: 600; }
+  .service-duration { font-size: 0.8rem; color: var(--text-light); }
+ 
+  /* ===== BOOKING ===== */
+  #booking-section { background: linear-gradient(135deg, var(--cream) 0%, #F0E8E0 100%); }
+  .booking-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .booking-form-container {
+    background: #fff; border-radius: 24px;
+    padding: 2.5rem; box-shadow: var(--shadow-soft);
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-label { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-mid); font-weight: 500; }
+  .form-input, .form-select, .form-textarea {
+    padding: 0.8rem 1rem; border: 1.5px solid rgba(196,115,90,0.2);
+    border-radius: 10px; font-size: 0.9rem; color: var(--text-dark);
+    background: var(--cream); transition: border-color 0.3s;
+    outline: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--rose); }
+  .form-textarea { resize: vertical; min-height: 90px; }
+  .btn-book {
+    width: 100%; margin-top: 1.5rem;
+    padding: 1rem; background: var(--rose); color: #fff;
+    border: none; border-radius: 12px;
+    font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;
+    transition: var(--transition); box-shadow: 0 6px 24px rgba(196,115,90,0.3);
+  }
+  .btn-book:hover { background: var(--deep-rose); transform: translateY(-2px); }
+ 
+  /* ===== GALLERY ===== */
+  #gallery-section { background: var(--deep-brown); }
+  #gallery-section .section-label { color: var(--champagne); }
+  #gallery-section .section-title { color: var(--cream); }
+  #gallery-section .section-desc { color: rgba(250,247,242,0.6); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    gap: 1rem;
+  }
+  .gallery-item {
+    border-radius: 12px; overflow: hidden;
+    position: relative; cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .gallery-item:hover { transform: scale(1.02); }
+  .gallery-item.tall { grid-row: span 2; }
+  .gallery-item.wide { grid-column: span 2; }
+  .gallery-placeholder {
+    width: 100%; background: linear-gradient(135deg, var(--medium-brown), var(--light-brown));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem;
+    min-height: 200px;
+  }
+  .gallery-item.tall .gallery-placeholder { min-height: 420px; }
+  .gallery-item.wide .gallery-placeholder { min-height: 200px; }
+ 
+  /* ===== TESTIMONIALS ===== */
+  #reviews-section { background: var(--warm-white); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .review-card {
+    background: #fff; border-radius: 16px; padding: 2rem;
+    border: 1px solid rgba(196,115,90,0.08);
+    box-shadow: var(--shadow-soft);
+  }
+  .stars { color: var(--gold); font-size: 1rem; margin-bottom: 1rem; letter-spacing: 2px; }
+  .review-text { font-size: 0.9rem; color: var(--text-mid); line-height: 1.8; font-style: italic; margin-bottom: 1.5rem; }
+  .reviewer { display: flex; align-items: center; gap: 0.8rem; }
+  .reviewer-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blush), var(--champagne));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .reviewer-name { font-size: 0.88rem; font-weight: 600; color: var(--deep-brown); }
+  .reviewer-tag { font-size: 0.78rem; color: var(--text-light); }
+ 
+  /* ===== TEAM ===== */
+  #team-section { background: var(--cream); }
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
+  .team-card { text-align: center; }
+  .team-photo {
+    width: 140px; height: 140px; border-radius: 50%; margin: 0 auto 1.2rem;
+    background: linear-gradient(135deg, var(--blush), var(--champagne));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem;
+    border: 4px solid #fff; box-shadow: var(--shadow-soft);
+  }
+  .team-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--deep-brown); margin-bottom: 0.3rem; }
+  .team-role { font-size: 0.8rem; color: var(--rose); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .team-bio { font-size: 0.85rem; color: var(--text-light); line-height: 1.7; }
+ 
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--deep-brown); color: var(--cream);
+    padding: 4rem 8% 2rem;
+  }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300;
+    margin-bottom: 1rem; color: var(--cream);
+  }
+  .footer-logo span { font-style: italic; color: var(--champagne); }
+  .footer-desc { font-size: 0.85rem; color: rgba(250,247,242,0.55); line-height: 1.8; margin-bottom: 1.5rem; }
+  .footer-heading { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--champagne); margin-bottom: 1rem; }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 0.6rem; }
+  .footer-links a { font-size: 0.85rem; color: rgba(250,247,242,0.55); transition: color 0.3s; }
+  .footer-links a:hover { color: var(--champagne); }
+  .footer-bottom {
+    border-top: 1px solid rgba(250,247,242,0.1);
+    padding-top: 2rem; display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem; color: rgba(250,247,242,0.4);
+  }
+  .social-links { display: flex; gap: 1rem; }
+  .social-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid rgba(250,247,242,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; transition: var(--transition); cursor: pointer;
+    color: rgba(250,247,242,0.5);
+  }
+  .social-btn:hover { background: var(--rose); border-color: var(--rose); color: #fff; }
+ 
+  /* ===== AUTH PAGES ===== */
+  .auth-page {
+    min-height: 100vh;
+    display: flex; align-items: stretch;
+    background: var(--cream);
+  }
+  .auth-left {
+    flex: 1; background: linear-gradient(160deg, var(--deep-brown) 0%, var(--medium-brown) 100%);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 4rem 3rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .auth-left-bg {
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .auth-brand {
+    position: relative; z-index: 1;
+  }
+  .auth-brand-logo {
+    font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300;
+    color: var(--cream); margin-bottom: 0.5rem;
+  }
+  .auth-brand-logo span { font-style: italic; color: var(--champagne); }
+  .auth-brand-tagline { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(250,247,242,0.5); margin-bottom: 3rem; }
+  .auth-left-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300;
+    color: var(--cream); line-height: 1.3; margin-bottom: 1rem;
+  }
+  .auth-left-title em { font-style: italic; color: var(--champagne); }
+  .auth-left-desc { font-size: 0.88rem; color: rgba(250,247,242,0.55); line-height: 1.8; max-width: 300px; }
+  .auth-perks { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 0.8rem; }
+  .auth-perk { display: flex; align-items: center; gap: 0.8rem; font-size: 0.85rem; color: rgba(250,247,242,0.7); }
+  .auth-perk-icon { width: 28px; height: 28px; background: rgba(196,115,90,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
+ 
+  .auth-right {
+    flex: 1.1; display: flex; align-items: center; justify-content: center;
+    padding: 4rem 3rem;
+  }
+  .auth-form-container { width: 100%; max-width: 420px; }
+  .auth-form-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300;
+    color: var(--deep-brown); margin-bottom: 0.4rem;
+  }
+  .auth-form-subtitle { font-size: 0.88rem; color: var(--text-light); margin-bottom: 2.5rem; }
+  .auth-form-subtitle a { color: var(--rose); font-weight: 500; cursor: pointer; }
+  .auth-form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
+  .auth-label { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-mid); font-weight: 500; }
+  .auth-input {
+    padding: 0.85rem 1.1rem; border: 1.5px solid rgba(196,115,90,0.2);
+    border-radius: 10px; font-size: 0.92rem; color: var(--text-dark);
+    background: var(--cream); transition: border-color 0.3s; outline: none;
+  }
+  .auth-input:focus { border-color: var(--rose); background: #fff; }
+  .auth-options {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.82rem; margin-bottom: 1.5rem;
+  }
+  .auth-remember { display: flex; align-items: center; gap: 0.4rem; cursor: pointer; color: var(--text-mid); }
+  .auth-remember input { accent-color: var(--rose); }
+  .auth-forgot { color: var(--rose); cursor: pointer; }
+  .auth-forgot:hover { text-decoration: underline; }
+  .btn-auth {
+    width: 100%; padding: 1rem; background: var(--rose); color: #fff;
+    border: none; border-radius: 12px;
+    font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;
+    transition: var(--transition); box-shadow: 0 6px 24px rgba(196,115,90,0.3);
+    margin-bottom: 1.5rem;
+  }
+  .btn-auth:hover { background: var(--deep-rose); transform: translateY(-2px); }
+  .auth-divider {
+    display: flex; align-items: center; gap: 1rem;
+    font-size: 0.78rem; color: var(--text-light); margin-bottom: 1.5rem;
+  }
+  .auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: rgba(196,115,90,0.2); }
+  .social-auth { display: flex; gap: 1rem; }
+  .btn-social {
+    flex: 1; padding: 0.75rem; border: 1.5px solid rgba(196,115,90,0.2);
+    border-radius: 10px; background: transparent; font-size: 0.88rem;
+    color: var(--text-mid); font-weight: 500; transition: var(--transition);
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  }
+  .btn-social:hover { border-color: var(--rose); color: var(--rose); background: rgba(196,115,90,0.04); }
+  .password-wrap { position: relative; }
+  .toggle-pw {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; color: var(--text-light); font-size: 1rem; cursor: pointer;
+  }
+  .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .success-toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+    background: var(--deep-brown); color: var(--cream);
+    padding: 1rem 1.5rem; border-radius: 12px;
+    font-size: 0.88rem; box-shadow: var(--shadow-med);
+    display: flex; align-items: center; gap: 0.7rem;
+    transform: translateY(100px); opacity: 0;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .success-toast.show { transform: translateY(0); opacity: 1; }
+  .toast-icon { font-size: 1.1rem; }
+ 
+  /* ===== DASHBOARD ===== */
+  #dashboard-page {
+    background: var(--cream);
+    padding-top: 70px;
+  }
+  .dash-header {
+    background: #fff; padding: 2rem 5%;
+    border-bottom: 1px solid rgba(196,115,90,0.1);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .dash-welcome {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--deep-brown);
+  }
+  .dash-welcome em { font-style: italic; color: var(--rose); }
+  .dash-content { padding: 2.5rem 5%; }
+  .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+  .dash-stat {
+    background: #fff; border-radius: 16px; padding: 1.5rem;
+    box-shadow: var(--shadow-soft); border: 1px solid rgba(196,115,90,0.08);
+    transition: var(--transition);
+  }
+  .dash-stat:hover { transform: translateY(-3px); box-shadow: var(--shadow-med); }
+  .dash-stat-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+  .dash-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--deep-brown); font-weight: 600; }
+  .dash-stat-label { font-size: 0.8rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.1em; }
+  .dash-sections { display: grid; grid-template-columns: 1.5fr 1fr; gap: 2rem; }
+  .dash-card { background: #fff; border-radius: 16px; padding: 1.8rem; box-shadow: var(--shadow-soft); }
+  .dash-card-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--deep-brown);
+    margin-bottom: 1.5rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(196,115,90,0.1);
+  }
+  .appt-item {
+    display: flex; align-items: center; gap: 1rem; padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(196,115,90,0.06);
+  }
+  .appt-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .appt-info { flex: 1; }
+  .appt-name { font-size: 0.88rem; font-weight: 600; color: var(--deep-brown); }
+  .appt-time { font-size: 0.78rem; color: var(--text-light); }
+  .appt-status {
+    font-size: 0.72rem; padding: 0.25rem 0.7rem; border-radius: 20px; font-weight: 500;
+  }
+  .status-confirmed { background: rgba(76,175,80,0.1); color: #2E7D32; }
+  .status-pending { background: rgba(255,152,0,0.1); color: #E65100; }
+  .loyalty-bar-wrap { margin-bottom: 1rem; }
+  .loyalty-label { display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.4rem; }
+  .loyalty-bar { height: 8px; background: var(--cream); border-radius: 4px; overflow: hidden; }
+  .loyalty-fill { height: 100%; background: linear-gradient(90deg, var(--rose), var(--gold)); border-radius: 4px; transition: width 1s ease; }
+  .btn-logout {
+    padding: 0.5rem 1.4rem; background: transparent;
+    border: 1.5px solid rgba(196,115,90,0.3); border-radius: 30px;
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+    color: var(--text-mid); transition: var(--transition); cursor: pointer;
+  }
+  .btn-logout:hover { border-color: var(--rose); color: var(--rose); }
+ 
+  /* ===== MOBILE NAV TOGGLE ===== */
+  .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--text-mid); margin: 5px 0; transition: 0.3s; }
+ 
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .hero-floating-card { display: none; }
+    .booking-layout { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .dash-sections { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 0 5%; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: block; }
+    section { padding: 60px 5%; }
+    .hero { padding: 0 5%; }
+    .form-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item.tall { grid-row: span 1; }
+    .auth-left { display: none; }
+    .auth-page { min-height: 100vh; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .input-row { grid-template-columns: 1fr; }
+    .dash-sections { grid-template-columns: 1fr; }
+  }
+ 
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+  .fade-in-up { animation: fadeInUp 0.7s ease forwards; }
+  .delay-1 { animation-delay: 0.1s; opacity:0; }
+  .delay-2 { animation-delay: 0.2s; opacity:0; }
+  .delay-3 { animation-delay: 0.3s; opacity:0; }
+  .delay-4 { animation-delay: 0.4s; opacity:0; }
+</style>
+</head>
+<body>
+ 
+<!-- ===== NAVIGATION ===== -->
+<nav id="main-nav">
+  <div class="nav-logo">Lumière <span>Beauty</span></div>
+  <div class="nav-links">
+    <a href="#" onclick="scrollToSection('services-section')">Services</a>
+    <a href="#" onclick="scrollToSection('booking-section')">Book</a>
+    <a href="#" onclick="scrollToSection('gallery-section')">Gallery</a>
+    <a href="#" onclick="scrollToSection('team-section')">Team</a>
+    <a href="#" onclick="scrollToSection('reviews-section')">Reviews</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn-nav btn-nav-outline" onclick="showPage('login-page')">Sign In</button>
+    <button class="btn-nav btn-nav-filled" onclick="showPage('register-page')">Join Us</button>
+  </div>
+  <button class="nav-hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+ 
+<!-- ===== HOME PAGE ===== -->
+<div id="home-page" class="page active">
+ 
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg-circle"></div>
+    <div class="hero-bg-circle"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow fade-in-up">Premium Beauty Studio</p>
+      <h1 class="fade-in-up delay-1">Elevate Your<br><em>Natural Beauty</em></h1>
+      <p class="hero-desc fade-in-up delay-2">Where artistry meets wellness. Experience bespoke beauty treatments crafted for you, in an atmosphere of pure luxury.</p>
+      <div class="hero-cta fade-in-up delay-3">
+        <button class="btn-primary" onclick="scrollToSection('booking-section')">Book Appointment</button>
+        <button class="btn-secondary" onclick="scrollToSection('services-section')">Explore Services</button>
+      </div>
+    </div>
+    <div class="hero-floating-card fade-in-up delay-4">
+      <p class="hero-card-title">Today's Availability</p>
+      <div class="hero-stat"><span>10:00 AM</span><span class="hero-stat-num">Available</span></div>
+      <div class="hero-stat"><span>12:30 PM</span><span class="hero-stat-num">Available</span></div>
+      <div class="hero-stat"><span>2:00 PM</span><span style="color:var(--text-light);font-size:0.82rem">Booked</span></div>
+      <div class="hero-stat"><span>4:30 PM</span><span class="hero-stat-num">Available</span></div>
+      <div class="hero-badge"><span class="badge-dot"></span>3 slots open today</div>
+    </div>
+  </section>
+ 
+  <!-- Services -->
+  <section id="services-section">
+    <p class="section-label">What We Offer</p>
+    <h2 class="section-title">Our <em>Signature</em> Services</h2>
+    <p class="section-desc">Each treatment is thoughtfully designed to enhance your unique beauty with precision and care.</p>
+    <div class="services-grid" id="services-grid"></div>
+  </section>
+ 
+  <!-- Booking -->
+  <section id="booking-section">
+    <div class="booking-layout">
+      <div>
+        <p class="section-label">Reserve Your Session</p>
+        <h2 class="section-title">Book Your <em>Appointment</em></h2>
+        <p class="section-desc">Choose your preferred service, stylist, and time. We'll take care of the rest.</p>
+        <div style="display:flex;flex-direction:column;gap:1.2rem;margin-top:1rem;">
+          <div style="display:flex;align-items:center;gap:1rem;font-size:0.88rem;color:var(--text-mid);">
+            <div style="width:40px;height:40px;background:var(--blush);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">📅</div>
+            <span>Select your preferred date & time</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;font-size:0.88rem;color:var(--text-mid);">
+            <div style="width:40px;height:40px;background:var(--blush);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">💅</div>
+            <span>Choose from our range of premium services</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;font-size:0.88rem;color:var(--text-mid);">
+            <div style="width:40px;height:40px;background:var(--blush);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">✨</div>
+            <span>Receive instant confirmation via email</span>
+          </div>
+        </div>
+      </div>
+      <div class="booking-form-container">
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--deep-brown);margin-bottom:1.5rem;">Reserve Your Spot</h3>
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label">First Name</label><input class="form-input" type="text" placeholder="Sarah"></div>
+          <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" type="text" placeholder="Johnson"></div>
+          <div class="form-group"><label class="form-label">Phone</label><input class="form-input" type="tel" placeholder="+1 (555) 000-0000"></div>
+          <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="sarah@email.com"></div>
+          <div class="form-group full"><label class="form-label">Service</label>
+            <select class="form-select" id="booking-service">
+              <option value="">Select a service...</option>
+              <option>Hair Styling & Color</option>
+              <option>Facial Treatment</option>
+              <option>Manicure & Pedicure</option>
+              <option>Makeup Artistry</option>
+              <option>Eyebrow & Lash</option>
+              <option>Spa & Massage</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="booking-date"></div>
+          <div class="form-group"><label class="form-label">Time</label>
+            <select class="form-select">
+              <option>10:00 AM</option>
+              <option>11:00 AM</option>
+              <option>12:00 PM</option>
+              <option>1:00 PM</option>
+              <option>2:00 PM</option>
+              <option>3:00 PM</option>
+              <option>4:00 PM</option>
+            </select>
+          </div>
+          <div class="form-group full"><label class="form-label">Stylist Preference</label>
+            <select class="form-select">
+              <option>No preference</option>
+              <option>Isabella Rosetti</option>
+              <option>Camille Dubois</option>
+              <option>Natasha Winters</option>
+              <option>Elena Vasquez</option>
+            </select>
+          </div>
+          <div class="form-group full"><label class="form-label">Special Requests</label><textarea class="form-textarea" placeholder="Any allergies, preferences, or special requests..."></textarea></div>
+        </div>
+        <button class="btn-book" onclick="submitBooking()">Confirm Appointment</button>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Gallery -->
+  <section id="gallery-section">
+    <p class="section-label">Our Work</p>
+    <h2 class="section-title" style="color:var(--cream);">Beauty <em style="color:var(--champagne)">Gallery</em></h2>
+    <p class="section-desc" style="color:rgba(250,247,242,0.55)">A glimpse into the transformations we create every day.</p>
+    <div class="gallery-grid">
+      <div class="gallery-item tall"><div class="gallery-placeholder">💇‍♀️</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder">💅</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder">💄</div></div>
+      <div class="gallery-item tall"><div class="gallery-placeholder">🧖‍♀️</div></div>
+      <div class="gallery-item wide"><div class="gallery-placeholder">✨</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder">👁️</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder">🌸</div></div>
+    </div>
+  </section>
+ 
+  <!-- Team -->
+  <section id="team-section">
+    <p class="section-label">The Experts</p>
+    <h2 class="section-title">Meet Our <em>Artists</em></h2>
+    <p class="section-desc">Our team of certified beauty professionals is dedicated to making you look and feel extraordinary.</p>
+    <div class="team-grid" id="team-grid"></div>
+  </section>
+ 
+  
+ 
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Lumière <span>Beauty</span></div>
+        <p class="footer-desc">A luxury beauty studio dedicated to enhancing your natural radiance through expert treatments and personalized care.</p>
+        <div class="social-links">
+          <div class="social-btn">f</div>
+          <div class="social-btn">in</div>
+          <div class="social-btn">ig</div>
+          <div class="social-btn">yt</div>
+        </div>
+      </div>
+      <div>
+        <p class="footer-heading">Services</p>
+        <ul class="footer-links">
+          <li><a href="#">Hair Styling</a></li>
+          <li><a href="#">Facials</a></li>
+          <li><a href="#">Nails</a></li>
+          <li><a href="#">Makeup</a></li>
+          <li><a href="#">Spa & Massage</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-heading">Studio</p>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Team</a></li>
+          <li><a href="#">Gallery</a></li>
+          <li><a href="#">Gift Cards</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-heading">Visit Us</p>
+        <ul class="footer-links">
+          <li><a href="#">123 Elm Street, Suite 5</a></li>
+          <li><a href="#">New York, NY 10001</a></li>
+          <li><a href="#">Mon–Sat: 9am – 7pm</a></li>
+          <li><a href="#">Sun: 10am – 5pm</a></li>
+          <li><a href="tel:+15550001234">+1 (555) 000-1234</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Lumière Beauty Studio. All rights reserved.</span>
+      <span>Privacy Policy · Terms of Service</span>
+    </div>
+  </footer>
+ 
+</div><!-- end home-page -->
+ 
+<!-- ===== LOGIN PAGE ===== -->
+<div id="login-page" class="page">
+  <div class="auth-page">
+    <div class="auth-left">
+      <div class="auth-left-bg"></div>
+      <div class="auth-brand">
+        <div class="auth-brand-logo">Lumière <span>Beauty</span></div>
+        <p class="auth-brand-tagline">Premium Beauty Studio</p>
+        <h2 class="auth-left-title">Welcome<br><em>Back, Darling</em></h2>
+        <p class="auth-left-desc">Sign in to manage your appointments, track your loyalty rewards, and access exclusive member offers.</p>
+        <div class="auth-perks">
+          <div class="auth-perk"><div class="auth-perk-icon">📅</div>View & manage bookings</div>
+          <div class="auth-perk"><div class="auth-perk-icon">💎</div>Access loyalty rewards</div>
+          <div class="auth-perk"><div class="auth-perk-icon">🎁</div>Exclusive member offers</div>
+        </div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-container">
+        <button onclick="showPage('home-page')" style="background:none;border:none;color:var(--text-light);font-size:0.82rem;cursor:pointer;margin-bottom:2rem;display:flex;align-items:center;gap:0.4rem;">← Back to Home</button>
+        <h2 class="auth-form-title">Sign In</h2>
+        <p class="auth-form-subtitle">Don't have an account? <a onclick="showPage('register-page')">Create one</a></p>
+        <div class="auth-form-group">
+          <label class="auth-label">Email Address</label>
+          <input class="auth-input" type="email" id="login-email" placeholder="your@email.com">
+        </div>
+        <div class="auth-form-group">
+          <label class="auth-label">Password</label>
+          <div class="password-wrap">
+            <input class="auth-input" type="password" id="login-password" placeholder="••••••••" style="width:100%;padding-right:42px;">
+            <button class="toggle-pw" onclick="togglePassword('login-password',this)">👁</button>
+          </div>
+        </div>
+        <div class="auth-options">
+          <label class="auth-remember"><input type="checkbox"> Remember me</label>
+          <span class="auth-forgot">Forgot password?</span>
+        </div>
+        <button class="btn-auth" onclick="handleLogin()">Sign In to My Account</button>
+        <div class="auth-divider">or continue with</div>
+        <div class="social-auth">
+          <button class="btn-social">🌐 Google</button>
+          <button class="btn-social">𝐟 Facebook</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ===== REGISTER PAGE ===== -->
+<div id="register-page" class="page">
+  <div class="auth-page">
+    <div class="auth-left">
+      <div class="auth-left-bg"></div>
+      <div class="auth-brand">
+        <div class="auth-brand-logo">Lumière <span>Beauty</span></div>
+        <p class="auth-brand-tagline">Premium Beauty Studio</p>
+        <h2 class="auth-left-title">Begin Your<br><em>Beauty Journey</em></h2>
+        <p class="auth-left-desc">Join thousands of clients who trust Lumière for their beauty needs. Members enjoy exclusive perks and priority booking.</p>
+        <div class="auth-perks">
+          <div class="auth-perk"><div class="auth-perk-icon">⭐</div>250 welcome loyalty points</div>
+          <div class="auth-perk"><div class="auth-perk-icon">🔔</div>Early access to promotions</div>
+          <div class="auth-perk"><div class="auth-perk-icon">👑</div>Personalized beauty profile</div>
+        </div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-container">
+        <button onclick="showPage('home-page')" style="background:none;border:none;color:var(--text-light);font-size:0.82rem;cursor:pointer;margin-bottom:2rem;display:flex;align-items:center;gap:0.4rem;">← Back to Home</button>
+        <h2 class="auth-form-title">Create Account</h2>
+        <p class="auth-form-subtitle">Already a member? <a onclick="showPage('login-page')">Sign in here</a></p>
+        <div class="input-row">
+          <div class="auth-form-group"><label class="auth-label">First Name</label><input class="auth-input" type="text" id="reg-fname" placeholder="Sarah"></div>
+          <div class="auth-form-group"><label class="auth-label">Last Name</label><input class="auth-input" type="text" id="reg-lname" placeholder="Johnson"></div>
+        </div>
+        <div class="auth-form-group">
+          <label class="auth-label">Email Address</label>
+          <input class="auth-input" type="email" id="reg-email" placeholder="sarah@email.com">
+        </div>
+        <div class="auth-form-group">
+          <label class="auth-label">Phone Number</label>
+          <input class="auth-input" type="tel" id="reg-phone" placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="auth-form-group">
+          <label class="auth-label">Password</label>
+          <div class="password-wrap">
+            <input class="auth-input" type="password" id="reg-password" placeholder="Min. 8 characters" style="width:100%;padding-right:42px;">
+            <button class="toggle-pw" onclick="togglePassword('reg-password',this)">👁</button>
+          </div>
+        </div>
+        <div class="auth-form-group">
+          <label class="auth-label">Confirm Password</label>
+          <input class="auth-input" type="password" id="reg-confirm" placeholder="••••••••">
+        </div>
+        <div style="font-size:0.8rem;color:var(--text-light);margin-bottom:1.5rem;line-height:1.6;">
+          By creating an account, you agree to our <a href="#" style="color:var(--rose);">Terms of Service</a> and <a href="#" style="color:var(--rose);">Privacy Policy</a>.
+        </div>
+        <button class="btn-auth" onclick="handleRegister()">Create My Account</button>
+        <div class="auth-divider">or sign up with</div>
+        <div class="social-auth">
+          <button class="btn-social">🌐 Google</button>
+          <button class="btn-social">𝐟 Facebook</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ===== DASHBOARD PAGE ===== -->
+<div id="dashboard-page" class="page">
+  <nav id="dash-nav" style="background:var(--glass);backdrop-filter:blur(16px);border-bottom:1px solid rgba(196,115,90,0.15);display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:70px;position:fixed;top:0;left:0;right:0;z-index:1000;">
+    <div class="nav-logo">Lumière <span>Beauty</span></div>
+    <div style="display:flex;gap:1.5rem;align-items:center;">
+      <span style="font-size:0.82rem;color:var(--text-mid);">Hello, <strong id="dash-username">Guest</strong> 👋</span>
+      <button class="btn-logout" onclick="handleLogout()">Sign Out</button>
+    </div>
+  </nav>
+  <div style="padding-top:70px;">
+    <div class="dash-header">
+      <div>
+        <h2 class="dash-welcome">Good morning, <em id="dash-welcome-name">Beauty</em> ✨</h2>
+        <p style="font-size:0.85rem;color:var(--text-light);margin-top:0.3rem;">Here's your beauty journey at a glance</p>
+      </div>
+      <button class="btn-primary" onclick="scrollToBooking()">+ New Booking</button>
+    </div>
+    <div class="dash-content">
+      <div class="dash-grid">
+        <div class="dash-stat"><div class="dash-stat-icon">📅</div><div class="dash-stat-num">3</div><div class="dash-stat-label">Upcoming Appointments</div></div>
+        <div class="dash-stat"><div class="dash-stat-icon">💎</div><div class="dash-stat-num">750</div><div class="dash-stat-label">Loyalty Points</div></div>
+        <div class="dash-stat"><div class="dash-stat-icon">🌸</div><div class="dash-stat-num">12</div><div class="dash-stat-label">Total Visits</div></div>
+        <div class="dash-stat"><div class="dash-stat-icon">💰</div><div class="dash-stat-num">$380</div><div class="dash-stat-label">Total Savings</div></div>
+      </div>
+      <div class="dash-sections">
+        <div class="dash-card">
+          <p class="dash-card-title">Upcoming Appointments</p>
+          <div class="appt-item">
+            <div class="appt-icon">💇‍♀️</div>
+            <div class="appt-info"><div class="appt-name">Hair Color & Highlights</div><div class="appt-time">Tomorrow · 2:00 PM · with Isabella</div></div>
+            <span class="appt-status status-confirmed">Confirmed</span>
+          </div>
+          <div class="appt-item">
+            <div class="appt-icon">💅</div>
+            <div class="appt-info"><div class="appt-name">Gel Manicure & Pedicure</div><div class="appt-time">Dec 18 · 11:00 AM · with Camille</div></div>
+            <span class="appt-status status-confirmed">Confirmed</span>
+          </div>
+          <div class="appt-item">
+            <div class="appt-icon">🧖‍♀️</div>
+            <div class="appt-info"><div class="appt-name">Deep Tissue Facial</div><div class="appt-time">Dec 22 · 3:30 PM · with Elena</div></div>
+            <span class="appt-status status-pending">Pending</span>
+          </div>
+        </div>
+        <div>
+          <div class="dash-card" style="margin-bottom:1.5rem;">
+            <p class="dash-card-title">Loyalty Rewards</p>
+            <div class="loyalty-bar-wrap">
+              <div class="loyalty-label"><span style="font-size:0.82rem;color:var(--text-mid);">Gold Status</span><span style="font-size:0.82rem;color:var(--rose);font-weight:600;">750 / 1000 pts</span></div>
+              <div class="loyalty-bar"><div class="loyalty-fill" style="width:75%"></div></div>
+              <p style="font-size:0.78rem;color:var(--text-light);margin-top:0.4rem;">250 more points to Platinum ✨</p>
+            </div>
+            <div style="background:var(--cream);border-radius:10px;padding:0.8rem;font-size:0.82rem;color:var(--text-mid);">
+              🎁 You have <strong style="color:var(--rose);">1 reward</strong> ready to redeem!
+            </div>
+          </div>
+          <div class="dash-card">
+            <p class="dash-card-title">Quick Actions</p>
+            <div style="display:flex;flex-direction:column;gap:0.7rem;">
+              <button onclick="showPage('home-page');setTimeout(()=>scrollToSection('booking-section'),100)" style="padding:0.7rem;background:var(--cream);border:none;border-radius:10px;font-size:0.85rem;color:var(--text-mid);cursor:pointer;text-align:left;transition:0.2s;" onmouseover="this.style.background='var(--blush)'" onmouseout="this.style.background='var(--cream)'">📅 Book New Appointment</button>
+              <button style="padding:0.7rem;background:var(--cream);border:none;border-radius:10px;font-size:0.85rem;color:var(--text-mid);cursor:pointer;text-align:left;transition:0.2s;" onmouseover="this.style.background='var(--blush)'" onmouseout="this.style.background='var(--cream)'">🎁 Buy Gift Card</button>
+              <button style="padding:0.7rem;background:var(--cream);border:none;border-radius:10px;font-size:0.85rem;color:var(--text-mid);cursor:pointer;text-align:left;transition:0.2s;" onmouseover="this.style.background='var(--blush)'" onmouseout="this.style.background='var(--cream)'">👤 Edit Profile</button>
+              <button style="padding:0.7rem;background:var(--cream);border:none;border-radius:10px;font-size:0.85rem;color:var(--text-mid);cursor:pointer;text-align:left;transition:0.2s;" onmouseover="this.style.background='var(--blush)'" onmouseout="this.style.background='var(--cream)'">⭐ Leave a Review</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- Toast Notification -->
+<div class="success-toast" id="toast">
+  <span class="toast-icon" id="toast-icon">✅</span>
+  <span id="toast-msg">Success!</span>
+</div>
+ 
+<script>
+  // ===== DATA =====
+  const SERVICES = [
+    { icon: '💇‍♀️', name: 'Hair Styling & Color', desc: 'From precision cuts to vibrant balayage and creative coloring, our stylists craft looks that complement your lifestyle.', price: 'From $75', duration: '60–150 min' },
+    { icon: '🧖‍♀️', name: 'Facial Treatments', desc: 'Revitalize your skin with our customized facials, using premium products tailored to your skin type and concerns.', price: 'From $95', duration: '60–90 min' },
+    { icon: '💅', name: 'Manicure & Pedicure', desc: 'Indulge in our luxurious nail care services, from classic manicures to intricate nail art and gel treatments.', price: 'From $45', duration: '45–90 min' },
+    { icon: '💄', name: 'Makeup Artistry', desc: 'Professional makeup for any occasion — bridal, editorial, special events, or a glam everyday look.', price: 'From $85', duration: '60–90 min' },
+    { icon: '👁️', name: 'Eyebrow & Lash', desc: 'Enhance your eyes with expert shaping, tinting, lash extensions, and lifts for a wide-awake, polished look.', price: 'From $35', duration: '30–60 min' },
+    { icon: '🌿', name: 'Spa & Massage', desc: 'Melt away tension with our soothing body treatments, aromatherapy massages, and full body rituals.', price: 'From $110', duration: '60–120 min' },
+  ];
+ 
+  const TEAM = [
+    { emoji: '👩‍🦰', name: 'Isabella Rosetti', role: 'Master Hair Stylist', bio: '12 years of experience specializing in color transformations and luxury hair treatments.' },
+    { emoji: '👩', name: 'Camille Dubois', role: 'Nail Artist', bio: 'Trained in Paris, Camille brings avant-garde nail art and meticulous care to every client.' },
+    { emoji: '👩‍🦳', name: 'Natasha Winters', role: 'Skincare Expert', bio: 'Certified dermal therapist with expertise in corrective and anti-aging facial treatments.' },
+    { emoji: '👩‍🦱', name: 'Elena Vasquez', role: 'Makeup Artist', bio: 'Bridal and editorial makeup specialist with credits in fashion magazines and runway shows.' },
+  ];
+ 
+  const REVIEWS = [
+    { stars: '★★★★★', text: 'Absolutely phenomenal experience from start to finish. Isabella transformed my hair completely and I couldn\'t be happier. The salon is gorgeous and the atmosphere is so relaxing.', name: 'Alexandra M.', tag: 'Hair Coloring' },
+    { stars: '★★★★★', text: 'My go-to for everything beauty! Camille does the most intricate nail art I\'ve ever seen. I always leave feeling like a million dollars.', name: 'Priya S.', tag: 'Nail Art' },
+    { stars: '★★★★☆', text: 'The facial with Natasha was like a reset button for my skin. She took so much time to understand my skin concerns. Will definitely be back!', name: 'Rachel T.', tag: 'Facial Treatment' },
+    { stars: '★★★★★', text: 'Elena did my bridal makeup and I cried when I saw myself — happy tears! She understood exactly what I wanted and delivered beyond my expectations.', name: 'Jessica L.', tag: 'Bridal Makeup' },
+    { stars: '★★★★★', text: 'Best salon experience I\'ve ever had. The atmosphere is luxurious without being intimidating. Every staff member makes you feel so welcome.', name: 'Monica R.', tag: 'Spa Treatment' },
+    { stars: '★★★★☆', text: 'The booking process is so seamless and the reminders are helpful. My brow shaping was perfect — finally found my go-to brow artist!', name: 'Diana K.', tag: 'Eyebrow Shaping' },
+  ];
+ 
+  // ===== INIT =====
+  function init() {
+    renderServices();
+    renderTeam();
+    renderReviews();
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('booking-date').min = today;
+    document.getElementById('booking-date').value = today;
+  }
+ 
+  function renderServices() {
+    const grid = document.getElementById('services-grid');
+    grid.innerHTML = SERVICES.map(s => `
+      <div class="service-card">
+        <div class="service-icon">${s.icon}</div>
+        <div class="service-name">${s.name}</div>
+        <div class="service-desc">${s.desc}</div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:1rem;">
+          <span class="service-price">${s.price}</span>
+          <span class="service-duration">⏱ ${s.duration}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+ 
+  function renderTeam() {
+    const grid = document.getElementById('team-grid');
+    grid.innerHTML = TEAM.map(m => `
+      <div class="team-card">
+        <div class="team-photo">${m.emoji}</div>
+        <div class="team-name">${m.name}</div>
+        <div class="team-role">${m.role}</div>
+        <div class="team-bio">${m.bio}</div>
+      </div>
+    `).join('');
+  }
+ 
+  function renderReviews() {
+    const grid = document.getElementById('reviews-grid');
+    grid.innerHTML = REVIEWS.map(r => `
+      <div class="review-card">
+        <div class="stars">${r.stars}</div>
+        <p class="review-text">"${r.text}"</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">${r.name[0]}</div>
+          <div><div class="reviewer-name">${r.name}</div><div class="reviewer-tag">${r.tag}</div></div>
+        </div>
+      </div>
+    `).join('');
+  }
+ 
+  // ===== PAGE NAVIGATION =====
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    window.scrollTo(0, 0);
+    const mainNav = document.getElementById('main-nav');
+    if (pageId === 'dashboard-page') {
+      mainNav.style.display = 'none';
+    } else {
+      mainNav.style.display = 'flex';
+    }
+  }
+ 
+  function scrollToSection(id) {
+    showPage('home-page');
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+ 
+  function scrollToBooking() {
+    showPage('home-page');
+    setTimeout(() => scrollToSection('booking-section'), 100);
+  }
+ 
+  // ===== AUTH =====
+  let currentUser = null;
+ 
+  function handleLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const pass = document.getElementById('login-password').value;
+    if (!email || !pass) { showToast('⚠️', 'Please fill in all fields.'); return; }
+    if (!email.includes('@')) { showToast('⚠️', 'Please enter a valid email.'); return; }
+    // Simulate login
+    const name = email.split('@')[0];
+    currentUser = { name: capitalize(name), email };
+    document.getElementById('dash-username').textContent = currentUser.name;
+    document.getElementById('dash-welcome-name').textContent = currentUser.name;
+    showPage('dashboard-page');
+    showToast('✅', `Welcome back, ${currentUser.name}!`);
+  }
+ 
+  function handleRegister() {
+    const fname = document.getElementById('reg-fname').value.trim();
+    const lname = document.getElementById('reg-lname').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const phone = document.getElementById('reg-phone').value.trim();
+    const pass = document.getElementById('reg-password').value;
+    const confirm = document.getElementById('reg-confirm').value;
+    if (!fname || !lname || !email || !phone || !pass || !confirm) { showToast('⚠️', 'Please complete all fields.'); return; }
+    if (!email.includes('@')) { showToast('⚠️', 'Please enter a valid email.'); return; }
+    if (pass.length < 8) { showToast('⚠️', 'Password must be at least 8 characters.'); return; }
+    if (pass !== confirm) { showToast('⚠️', 'Passwords do not match.'); return; }
+    currentUser = { name: fname, email };
+    document.getElementById('dash-username').textContent = fname;
+    document.getElementById('dash-welcome-name').textContent = fname;
+    showPage('dashboard-page');
+    showToast('🎉', `Welcome to Lumière, ${fname}! 250 points added.`);
+  }
+ 
+  function handleLogout() {
+    currentUser = null;
+    showPage('home-page');
+    showToast('👋', 'You have been signed out.');
+  }
+ 
+  function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    input.type = input.type === 'password' ? 'text' : 'password';
+    btn.textContent = input.type === 'password' ? '👁' : '🙈';
+  }
+ 
+  // ===== BOOKING =====
+  function submitBooking() {
+    const service = document.getElementById('booking-service').value;
+    const date = document.getElementById('booking-date').value;
+    if (!service || !date) { showToast('⚠️', 'Please select a service and date.'); return; }
+    showToast('✅', `Appointment confirmed! See you on ${formatDate(date)}.`);
+  }
+ 
+  // ===== TOAST =====
+  function showToast(icon, msg) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toast-icon').textContent = icon;
+    document.getElementById('toast-msg').textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+ 
+  // ===== UTILS =====
+  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function formatDate(d) { return new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }); }
+  function toggleMobileMenu() { /* mobile nav toggle */ }
+ 
+  // Init on load
+  init();
+</script>
+</body>
+</html>
